@@ -55,6 +55,8 @@ backend:
       memory: 1Gi
   env:
     DB_DSN: oracle:1521/xe
+    DB_USER: ""
+    DB_PASS: ""
 
 oracle:
   enabled: true
@@ -71,6 +73,9 @@ oracle:
     enabled: true
     storageClass: local-path
     size: 20Gi
+
+  env:
+    ORACLE_PASSWORD: ""
 
   resources:
     requests:
