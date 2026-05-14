@@ -15,8 +15,8 @@
     <div class="container">
         <h2>Oracle Write/Read</h2>
         <input type="text" id="input" placeholder="Enter text">
-        <button onclick="write()">Write</button>
-        <button onclick="read()">Load from DB</button>
+        <button onclick="writeData()">Write</button>
+        <button onclick="readData()">Load from DB</button>
 
         <ul id="list"></ul>
     </div>
@@ -24,7 +24,7 @@
     <script>
         const API_BASE = "/api"; 
 
-        async function write() {
+        async function writeData() {
             const val = document.getElementById('input').value;
             if(!val) return alert("Please enter something!");
 
@@ -37,7 +37,7 @@
             } catch (err) { alert("Error writing data"); }
         }
 
-        async function read() {
+        async function readData() {
             try {
                 const res = await fetch(`${API_BASE}/read`);
                 const json = await res.json();
