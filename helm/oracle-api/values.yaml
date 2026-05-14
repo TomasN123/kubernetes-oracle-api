@@ -17,7 +17,7 @@ frontend:
 
   ingress:
     enabled: true
-    className: nginx
+    className: traefik
     host: oracle-api-web.com
 
   resources:
