@@ -1,0 +1,20 @@
+apiVersion: v2
+name: oracle-api
+description: Helm chart for application Frontend-Backend-Database
+
+type: application
+
+version: 1.0.0
+appVersion: "1.0.0"
+
+keywords:
+  - frontend
+  - backend
+  - oracle
+  - kubernetes
+
+
+sources:
+  - https://github.com/TomasN123?tab=repositories
+maintainers:
+  - name: Tomas Novotny

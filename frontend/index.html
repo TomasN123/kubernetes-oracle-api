@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oracle App</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input { padding: 8px; width: 200px; }
+        button { padding: 8px 15px; cursor: pointer; }
+        ul { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Oracle Write/Read</h2>
+        <input type="text" id="input" placeholder="Enter text">
+        <button onclick="write()">Write</button>
+        <button onclick="read()">Load from DB</button>
+
+        <ul id="list"></ul>
+    </div>
+
+    <script>
+        const API_BASE = "/api"; 
+
+        async function write() {
+            const val = document.getElementById('input').value;
+            if(!val) return alert("Please enter something!");
+
+            try {
+                const res = await fetch(`${API_BASE}/write/${encodeURIComponent(val)}`, { method: 'POST' });
+                if (res.ok) {
+                    alert("Data saved!");
+                    document.getElementById('input').value = '';
+                }
+            } catch (err) { alert("Error writing data"); }
+        }
+
+        async function read() {
+            try {
+                const res = await fetch(`${API_BASE}/read`);
+                const json = await res.json();
+                const list = document.getElementById('list');
+                list.innerHTML = json.data.map(item => `<li>${item}</li>`).join('');
+            } catch (err) { alert("Error loading data"); }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+global:
+  namespace: production
+
+frontend:
+  enabled: true
+
+  replicaCount: 1
+
+  image:
+    repository: uif18812/frontend
+    tag: "latest"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: nginx
+    host: oracle-api-web.com
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+
+
+backend:
+  enabled: true
+
+  replicaCount: 1
+
+  image:
+    repository: uif18812/backend
+    tag: "latest"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 8000
+
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  env:
+    DB_DSN: oracle:1521/xe
+
+oracle:
+  enabled: true
+
+  image:
+    repository: gvenzl/oracle-xe
+    tag: "21-slim"
+
+  service:
+    type: ClusterIP
+    port: 1521
+
+  persistence:
+    enabled: true
+    storageClass: local-path
+    size: 20Gi
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+
+    limits:
+      cpu: 2
+      memory: 4Gi

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oracle
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: oracle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracle
+  template:
+    metadata:
+      labels:
+        app: oracle
+    spec:
+      containers:
+      - name: oracle
+        image: {{ .Values.oracle.image.repository}}:{{ .Values.oracle.image.tag}}
+        volumeMounts:
+        - name: oracle-pvc
+          mountPath: /opt/oracle/oradata
+        ports:
+        - containerPort: 1521
+        resources:
+          limits:
+            cpu: {{ .Values.oracle.resources.limits.cpu }}
+            memory: {{ .Values.oracle.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.oracle.resources.requests.cpu }}
+            memory: {{ .Values.oracle.resources.requests.memory }}
+        env:
+        - name: ORACLE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: oracle-secret
+              key: ORACLE_PASSWORD
+      volumes:
+        - name: oracle-pvc
+          persistentVolumeClaim:
+            claimName: oracle-pvc
