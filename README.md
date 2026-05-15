@@ -2,6 +2,8 @@
 
 ![ArgoCD Screenshot](img/argocd.png)
 
+![Infrastructure Diagram](img/diagram.jpeg)
+
 > A complete zero-to-production simulation: From local development to GitOps-driven deployment on a local Kubernetes cluster.
 
 The application itself is intentionally simple, a frontend served by **Nginx** communicating with a **FastAPI** backend that reads/writes data to an **Oracle XE** database. 
